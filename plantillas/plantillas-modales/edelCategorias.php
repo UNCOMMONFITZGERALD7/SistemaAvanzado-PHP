@@ -1,4 +1,5 @@
 <?php
+
 $stmt = $pdo->prepare("SELECT * FROM categoria");
 $stmt->execute();
 $categorias = $stmt->fetchAll();
@@ -28,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
                 $mensaje_usuario = "Actualizado correctamente.";
             }
             
-            header("Location: eldelCategorias.php?status=success");
+            header("Location: " . URL_BASE . "plantillas/plantillas-modales/edelCategorias.php?status=success");
             exit;
 
         } catch (PDOException $e) {
@@ -46,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 
 <?php if (!empty($categorias)): ?>
     <?php foreach ($categorias as $categoria): ?>
-        <form action="eldelCategorias.php" method="POST" class="form-categoria" data-id="<?= $categoria['id'] ?>">
+        <form action="<?= URL_BASE ?>plantillas/plantillas-modales/edelCategorias.php" method="POST" class="form-categoria" data-id="<?= $categoria['id'] ?>">
             
             <input type="hidden" name="id_categoria" value="<?= $categoria['id'] ?>">
 
