@@ -1,0 +1,11 @@
+:root {
+    --color-encabezado: #1B3A7A;
+    --color-botones-acciones: #0A9870;
+    --color-terciario-acciones: #7030A0;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+

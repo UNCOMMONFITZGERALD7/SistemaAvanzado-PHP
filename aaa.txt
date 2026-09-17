@@ -1,0 +1,20 @@
+#1B3A7A color primario - navbar encabezado
+#0A9870 color acento - botones de accion
+#7030A0 terciario - footer bordes destacados
+
+requisitos BD:
+
+fecha_ingreso DATE (Columna extra)
+
+proveedores (tabla extra) {
+    nombre,
+    telefono,
+    correo
+}
+
+
+tarea:
+
+ver agregar eliminar y editar bd
+
+organizarlos por categorias
