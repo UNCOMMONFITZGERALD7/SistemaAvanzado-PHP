@@ -73,7 +73,7 @@ function interpretarError(PDOException $e): string
     <?php include('./plantillas/header.php') ?>
     <?php include('./plantillas/formAgregar.php') ?>
     <dialog id="modal">
-        <?php include('./plantillas/plantillas-modales/agregarcategorias.php') ?>
+        <?php include('./plantillas/plantillas-modales/agregarCategorias.php') ?>
     </dialog>
     <script src="index.js"></script>
 </body>

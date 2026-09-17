@@ -66,4 +66,29 @@
             <?php endif; ?>
         </tbody>
     </table>
+    <h2>Categorias de productos</h2>
+    <?php
+    $stmt = $pdo->prepare("SELECT * FROM categoria");
+    $stmt->execute();
+    $categorias = $stmt->fetchAll();
+    ?>
+    <table class="tabla-productos">
+        <thead>
+            <th>Categoría</th>
+            <th>Descripción</th>
+        </thead>
+        <tbody>
+            <?php if (!empty($categorias)): ?>
+                <?php foreach ($categorias as $categoria): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($categoria['nombre']) ?></td>
+                        <td><?= htmlspecialchars($categoria['descripcion']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+    <?php if ($_GET['stlabel'] === 'prdc'): ?>
+        <button type="button" id="btnAbrirModal">Administrar categorias</button>
+    <?php endif; ?>
 </section>

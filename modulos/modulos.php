@@ -27,10 +27,34 @@ if ($_GET['stlabel'] === 'prdc') {
     <?php include(ROOT_PATH . 'plantillas/header.php') ?>
     <?php if ($_GET['stlabel'] === 'prdc'): ?>
         <?php include(ROOT_PATH . 'plantillas/listaProductos.php') ?>
+    <?php elseif ($_GET['stlabel'] === 'prvd'): ?>
+        <section>
+            <?php 
+            $stmt = $pdo->prepare("SELECT * FROM proveedores");
+            $stmt->execute();
+            $proveedores = $stmt->fetchAll();
+            ?>
+            <div class="contenedor-proveedores">
+                <h2>Proveedores</h2>
+                <?php if (!empty($proveedores)): ?>
+                    <?php foreach ($proveedores as $proveedor): ?>
+                        <div class="tarjeta-proveedor">
+                            <h3><?= htmlspecialchars($proveedor['nombre']) ?></h3>
+                            <h4>Contactos:</h4>
+                            <p>Telefono: <?= htmlspecialchars($proveedor['telefono']) ?></p>
+                            <p>Telefono: <?= htmlspecialchars($proveedor['email']) ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+            <div class="formulario-proveedor">
+                <h3>Agregar proveedor</h3>
+                <form action="<?= ROOT_PATH . 'funciones/proveedorAgregar.php' ?>" method="POST"></form>
+            </div>
+        </section>
     <?php else: ?>
         <?= 'Hola, nada por aquí aún' ?>
     <?php endif; ?>
-    <button type="button" id="btnAbrirModal">Administrar categorias</button>
     <?php $mensaje_usuario = $_GET['cat_status'] ?? ''; ?>
     <?php if ($mensaje_usuario): ?>
         <p><?= htmlspecialchars($mensaje_usuario) ?></p>
