@@ -2,13 +2,17 @@ const modal = document.getElementById('modal');
 const btnAbrir = document.getElementById('btnAbrirModal');
 const btnCerrar = document.getElementById('btnCerrar');
 
-btnAbrir.addEventListener('click', () => {
-    modal.showModal();
-});
+if (btnAbrir && modal) {
+    btnAbrir.addEventListener('click', () => {
+        modal.showModal();
+    });
+}
 
-btnCerrar.addEventListener('click', () => {
-    modal.close();
-});
+if (btnCerrar && modal) {
+    btnCerrar.addEventListener('click', () => {
+        modal.close();
+    });
+}
 
 const inputsInformacion = document.querySelectorAll(".input");
 

@@ -31,11 +31,11 @@ if ($_GET['stlabel'] === 'prdc') {
     <?php else: ?>
         <?= 'Hola, nada por aquí aún' ?>
     <?php endif; ?>
-    <button type="button" id="asignar-categoria">Administrar categorias</button>
+    <button type="button" id="btnAbrirModal">Administrar categorias</button>
     <dialog id="modal">
         <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelCategorias.php') ?>
     </dialog>
-    <script src="<?= ROOT_PATH . 'index.js' ?>"></script>
+    <script src="../index.js"></script>
 </body>
 
 </html>
