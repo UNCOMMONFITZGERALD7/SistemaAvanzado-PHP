@@ -1,6 +1,4 @@
 <?php
-require_once(dirname(__FILE__, 2) . '/globals.php');
-require_once ROOT_PATH . 'conexion.php';
 
 $stmt = $pdo->prepare("SELECT * FROM categoria");
 $stmt->execute();
@@ -56,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 
 <?php if (!empty($categorias)): ?>
     <?php foreach ($categorias as $categoria): ?>
-        <form action="<?= URL_BASE ?>plantillas/plantillas-modales/edelCategorias.php" method="POST" class="form-categoria" data-id="<?= $categoria['id'] ?>">
+        <form action="<?= URL_BASE ?>modulos/modulos.php?stlabel=<?= htmlspecialchars($_GET['stlabel'] ?? '') ?>" method="POST" class="form-categoria" data-id="<?= $categoria['id'] ?>">
 
             <input type="hidden" name="id_categoria" value="<?= $categoria['id'] ?>">
 
@@ -97,10 +95,12 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         inputNombre.addEventListener('input', evaluarCambios);
         inputDesc.addEventListener('input', evaluarCambios);
     });
-    document.getElementById('modal');
-    document.getElementById('btnCerrar').addEventListener('click', () => {
-        modal.close();
-    });
-</script>
 
-?>
+    const btnCerrarModal = document.getElementById('btnCerrar');
+    const modalCategorias = document.getElementById('modal');
+    if (btnCerrarModal && modalCategorias) {
+        btnCerrarModal.addEventListener('click', () => {
+            modalCategorias.close();
+        });
+    }
+</script>
