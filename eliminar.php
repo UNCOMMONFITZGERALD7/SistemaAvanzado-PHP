@@ -24,16 +24,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($_POST['id-producto']) {
 
         try {
+            $stmtCheck = $pdo->prepare('SELECT COUNT(*) FROM ventas WHERE producto_id = :id');
+            $stmtCheck->execute(['id' => $_POST['id-producto']]);
+            $enUso = (int) $stmtCheck->fetchColumn();
+
+            if ($enUso > 0) {
+                header('Location: ' . URL_BASE . 'modulos/modulos.php?stlabel=prdc&estado=error&mensaje=' . urlencode("No se puede eliminar: hay $enUso venta(s) asociada(s)."));
+                exit();
+            }
+
             $stmt = $pdo->prepare('DELETE FROM productos WHERE id = :id');
             $stmt->execute([
                 'id' => $_POST['id-producto'],
             ]);
-
             header('Location: ' . URL_BASE . 'modulos/modulos.php?stlabel=prdc&estado=eliminado');
             exit();
         } catch (PDOException $e) {
             error_log('Error al eliminar el elemento: ' . $e->getMessage());
-
             $mensajeError = interpretarError($e);
             header('Location: ' . URL_BASE . 'modulos/modulos.php?stlabel=prdc&estado=error&mensaje=' . urlencode($mensajeError));
             exit();

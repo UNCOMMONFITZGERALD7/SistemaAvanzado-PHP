@@ -1,11 +1,12 @@
 <section>
     <?php
     $stmt = $pdo->prepare("
-        SELECT p.*, c.nombre AS nombre_categoria 
+        SELECT p.*, c.nombre AS nombre_categoria,
+            (SELECT COUNT(*) FROM ventas v WHERE v.producto_id = p.id) AS ventas_count
         FROM productos p
         INNER JOIN categoria c ON p.categoria = c.id
         ORDER BY p.id DESC
-        ");
+    ");
     $stmt->execute();
     $productos = $stmt->fetchAll();
     ?>
@@ -34,18 +35,20 @@
                         <td><?php echo htmlspecialchars($producto['precio'] * $producto['stock']); ?></td>
 
                         <td>
-                            <form action="<?= URL_BASE . 'eliminar.php' ?>" method="POST" style="display:inline;"
+                            <?php $tieneVentas = (int) $producto['ventas_count'] > 0; ?>
+                            <form action="<?= URL_BASE . 'eliminar.php?estado=edpro' ?>" method="POST" style="display:inline;"
                                 onsubmit="return confirm('¿Eliminar este producto?')">
-                                <input type="hidden" name="id-producto" value="<?php echo htmlspecialchars($producto['id']); ?>">
-                                <button id="eliminar-est" class="opcion-est" type="submit">
+                                <input type="hidden" name="id-producto"
+                                    value="<?php echo htmlspecialchars($producto['id']); ?>">
+                                <button id="eliminar-est" class="opcion-est" type="submit" <?= $tieneVentas ? 'disabled title="No se puede eliminar: tiene ventas asociadas"' : '' ?>>
                                     <!-- SVG -->
                                 </button>
                             </form>
                         </td>
 
                         <td>
-                            <button id="editar-producto" type="button" class="opcion-est btn-editar"
-                                data-id="<?php echo htmlspecialchars($producto['id']); ?>">
+                            <button id="editar-producto" type="submit" class="opcion-est btn-editar"
+                                data-id="<?php echo htmlspecialchars($producto['id']); ?>" da-ach="edelProductos.php">
                                 <!-- SVG -->
                             </button>
                         </td>
@@ -81,6 +84,6 @@
         </tbody>
     </table>
     <?php if ($_GET['stlabel'] === 'prdc'): ?>
-        <button type="button" id="btnAbrirModal">Administrar categorias</button>
+        <button type="button" id="btnAbrirModal" da-ach="edelCategorias.php">Administrar categorias</button>
     <?php endif; ?>
 </section>

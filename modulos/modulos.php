@@ -43,7 +43,7 @@ $proveedores = $stmt->fetchAll();
     <?php endif; ?>
 
     <dialog id="modal">
-        <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelCategorias.php') ?>
+        
     </dialog>
     <script src="../index.js"></script>
 </body>

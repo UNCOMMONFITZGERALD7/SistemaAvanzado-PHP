@@ -18,3 +18,14 @@ tarea:
 ver agregar eliminar y editar bd
 
 organizarlos por categorias
+
+
+
+
+<?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+            <?php if ($_POST['accion_modal'] === 'edcat'): ?>
+                <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelCategorias. php'); ?>
+            <?php elseif ($_POST['accion_modal'] === 'edpro'): ?>
+                <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelProductos.php'); ?>
+            <?php endif; ?>
+        <?php endif; ?>

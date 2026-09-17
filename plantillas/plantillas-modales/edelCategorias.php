@@ -1,4 +1,6 @@
 <?php
+require_once(dirname(__FILE__, 3) . '/globals.php');
+require_once ROOT_PATH . 'conexion.php';
 
 $stmt = $pdo->prepare("SELECT * FROM categoria");
 $stmt->execute();
@@ -48,9 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 ?>
 
 <h2>Mis Categorías</h2>
-<button type="button" id="btnCerrar" aria-label="Cerrar">
-    <span aria-hidden="true">&times;</span>
-</button>
 
 <?php if (!empty($categorias)): ?>
     <?php foreach ($categorias as $categoria): ?>

@@ -1,38 +1,52 @@
 <?php
-
-$stmt = $pdo->prepare("SELECT * FROM productos");
+require_once(dirname(__FILE__, 3) . '/globals.php');
+require_once ROOT_PATH . 'conexion.php';
+$stmt = $pdo->prepare("
+    SELECT p.*,
+           (SELECT COUNT(*) FROM ventas v WHERE v.producto_id = p.id) AS ventas_count
+    FROM productos p
+    ORDER BY p.id DESC
+");
 $stmt->execute();
 $productos = $stmt->fetchAll();
+
+$stmtCat = $pdo->prepare("SELECT id, nombre FROM categoria ORDER BY nombre");
+$stmtCat->execute();
+$categoriasDisponibles = $stmtCat->fetchAll();
 
 $mensaje_usuario = "";
 
 if ($_SERVER["REQUEST_METHOD"] === 'POST') {
     $accion = $_POST['accion'] ?? '';
-    $id_categoria = filter_input(INPUT_POST, 'id_categoria', FILTER_VALIDATE_INT);
+    $id_producto = filter_input(INPUT_POST, 'id_producto', FILTER_VALIDATE_INT);
 
-    if ($id_categoria) {
+    if ($id_producto) {
         try {
             if ($accion === 'eliminar') {
-                $stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM productos WHERE categoria = :id");
-                $stmtCheck->execute([':id' => $id_categoria]);
+                $stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM ventas WHERE producto_id = :id");
+                $stmtCheck->execute([':id' => $id_producto]);
                 $enUso = (int) $stmtCheck->fetchColumn();
 
                 if ($enUso > 0) {
-                    $mensaje_usuario = "No se puede eliminar: hay $enUso producto(s) usando esta categoría.";
+                    $mensaje_usuario = "No se puede eliminar: hay $enUso venta(s) asociada(s) a este producto.";
                 } else {
-                    $stmt = $pdo->prepare("DELETE FROM categoria WHERE id = :id");
-                    $stmt->execute([':id' => $id_categoria]);
+                    $stmt = $pdo->prepare("DELETE FROM productos WHERE id = :id");
+                    $stmt->execute([':id' => $id_producto]);
                     $mensaje_usuario = "Eliminado correctamente.";
                 }
             } elseif ($accion === 'editar') {
-                $nombre = $_POST['nombre-categoria'] ?? '';
-                $descripcion = $_POST['descripcion-categoria'] ?? '';
+                $nombre = $_POST['nombre-producto'] ?? '';
+                $precio = $_POST['precio-producto'] ?? '';
+                $stock = $_POST['stock-producto'] ?? '';
+                $categoria = filter_input(INPUT_POST, 'categoria-producto', FILTER_VALIDATE_INT);
 
-                $stmt = $pdo->prepare("UPDATE categoria SET nombre = :nombre, descripcion = :desc WHERE id = :id");
+                $stmt = $pdo->prepare("UPDATE productos SET nombre = :nombre, precio = :precio, stock = :stock, categoria = :categoria WHERE id = :id");
                 $stmt->execute([
                     ':nombre' => $nombre,
-                    ':desc' => $descripcion,
-                    ':id' => $id_categoria
+                    ':precio' => $precio,
+                    ':stock' => $stock,
+                    ':categoria' => $categoria,
+                    ':id' => $id_producto
                 ]);
                 $mensaje_usuario = "Actualizado correctamente.";
             }
@@ -41,75 +55,96 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
             exit;
         } catch (PDOException $e) {
             error_log("Error en DB: " . $e->getMessage());
-            $mensaje_usuario = "No se pudo procesar la acción.";
+            $mensaje_usuario = interpretarError($e);
         }
     }
 }
 ?>
-
-<h2>Mis Categorías</h2>
-<button type="button" id="btnCerrar" aria-label="Cerrar">
-    <span aria-hidden="true">&times;</span>
-</button>
+<h2>Mis Productos</h2>
 
 <?php if (!empty($productos)): ?>
     <?php foreach ($productos as $producto): ?>
-        <form action="<?= URL_BASE ?>modulos/modulos.php?stlabel=<?= htmlspecialchars($_GET['stlabel'] ?? '') ?>" method="POST" class="form-producto" data-id="<?= $producto['id'] ?>">
+        <?php $tieneVentas = (int) $producto['ventas_count'] > 0; ?>
+        <form action="<?= URL_BASE ?>modulos/modulos.php?stlabel=<?= htmlspecialchars($_GET['stlabel'] ?? '') ?>" method="POST"
+            class="form-producto" data-id="<?= $producto['id'] ?>" data-ventas="<?= (int) $producto['ventas_count'] ?>">
 
             <input type="hidden" name="id_producto" value="<?= $producto['id'] ?>">
 
             <label>Nombre</label>
-            <input required class="input input-nombre" type="text" name="nombre-producto" maxlength="60"
-                value="<?= htmlspecialchars($producto['nombre']) ?>"
-                data-original="<?= htmlspecialchars($producto['nombre']) ?>">
-            <label>Precio</label>
-            <input required class="input input-nombre" type="text" name="nombre-producto" maxlength="60"
-                value="<?= htmlspecialchars($producto['nombre']) ?>"
-                data-original="<?= htmlspecialchars($producto['nombre']) ?>">
-            <label>Stock</label>
-            <input required class="input input-nombre" type="text" name="nombre-producto" maxlength="60"
-                value="<?= htmlspecialchars($producto['nombre']) ?>"
-                data-original="<?= htmlspecialchars($producto['nombre']) ?>">
-            <label>N</label>
-            <input required class="input input-nombre" type="text" name="nombre-producto" maxlength="60"
+            <input required class="input input-nombre" type="text" name="nombre-producto" maxlength="80"
                 value="<?= htmlspecialchars($producto['nombre']) ?>"
                 data-original="<?= htmlspecialchars($producto['nombre']) ?>">
 
-            
+            <label>Precio</label>
+            <input required class="input input-precio" type="number" step="0.01" min="0" name="precio-producto"
+                value="<?= htmlspecialchars($producto['precio']) ?>"
+                data-original="<?= htmlspecialchars($producto['precio']) ?>">
+
+            <label>Stock</label>
+            <input required class="input input-stock" type="number" step="1" min="0" name="stock-producto"
+                value="<?= htmlspecialchars($producto['stock']) ?>" data-original="<?= htmlspecialchars($producto['stock']) ?>">
+
+            <label>Categoría</label>
+            <select required class="input input-categoria" name="categoria-producto"
+                data-original="<?= $producto['categoria'] ?>">
+                <?php foreach ($categoriasDisponibles as $cat): ?>
+                    <option value="<?= $cat['id'] ?>" <?= $cat['id'] == $producto['categoria'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($cat['nombre']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <label>Fecha de ingreso</label>
+            <input class="input" type="text" value="<?= htmlspecialchars($producto['fecha_ingreso']) ?>" disabled>
+
+            <?php if ($tieneVentas): ?>
+                <p class="aviso-ventas">Tiene <?= (int) $producto['ventas_count'] ?> venta(s) asociada(s): no se puede eliminar.</p>
+            <?php endif; ?>
 
             <div class="contenedor-boton">
-                <button type="submit" name="accion" value="eliminar" class="btn-accion btn-eliminar">Eliminar</button>
+                <button type="submit" name="accion" value="eliminar" class="btn-accion btn-eliminar" <?= $tieneVentas ? 'disabled title="No se puede eliminar: tiene ventas asociadas"' : '' ?>>
+                    Eliminar
+                </button>
             </div>
         </form>
     <?php endforeach; ?>
 <?php endif; ?>
 
 <script>
-    document.querySelectorAll('.form-categoria').forEach((formulario) => {
+    document.querySelectorAll('.form-producto').forEach((formulario) => {
         const inputNombre = formulario.querySelector('.input-nombre');
-        const inputDesc = formulario.querySelector('.input-desc');
+        const inputPrecio = formulario.querySelector('.input-precio');
+        const inputStock = formulario.querySelector('.input-stock');
+        const inputCategoria = formulario.querySelector('.input-categoria');
         const contenedorBoton = formulario.querySelector('.contenedor-boton');
+        const tieneVentas = parseInt(formulario.dataset.ventas, 10) > 0;
 
         const evaluarCambios = () => {
-            const nombreCambio = inputNombre.value !== inputNombre.dataset.original;
-            const descCambio = inputDesc.value !== inputDesc.dataset.original;
+            const huboCambio =
+                inputNombre.value !== inputNombre.dataset.original ||
+                inputPrecio.value !== inputPrecio.dataset.original ||
+                inputStock.value !== inputStock.dataset.original ||
+                inputCategoria.value !== inputCategoria.dataset.original;
 
-            if (nombreCambio || descCambio) {
+            if (huboCambio) {
                 contenedorBoton.innerHTML = '<button type="submit" name="accion" value="editar" class="btn-accion btn-editar">Editar</button>';
             } else {
-                contenedorBoton.innerHTML = '<button type="submit" name="accion" value="eliminar" class="btn-accion btn-eliminar">Eliminar</button>';
+                const disabledAttr = tieneVentas ? 'disabled title="No se puede eliminar: tiene ventas asociadas"' : '';
+                contenedorBoton.innerHTML = `<button type="submit" name="accion" value="eliminar" class="btn-accion btn-eliminar" ${disabledAttr}>Eliminar</button>`;
             }
         };
 
         inputNombre.addEventListener('input', evaluarCambios);
-        inputDesc.addEventListener('input', evaluarCambios);
+        inputPrecio.addEventListener('input', evaluarCambios);
+        inputStock.addEventListener('input', evaluarCambios);
+        inputCategoria.addEventListener('change', evaluarCambios);
     });
 
     const btnCerrarModal = document.getElementById('btnCerrar');
-    const modalCategorias = document.getElementById('modal');
-    if (btnCerrarModal && modalCategorias) {
+    const modalProductos = document.getElementById('modal');
+    if (btnCerrarModal && modalProductos) {
         btnCerrarModal.addEventListener('click', () => {
-            modalCategorias.close();
+            modalProductos.close();
         });
     }
 </script>

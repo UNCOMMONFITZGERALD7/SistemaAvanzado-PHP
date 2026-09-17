@@ -16,7 +16,7 @@
                             <p>Telefono:
                                 <?= htmlspecialchars($proveedor['correo']) ?>
                             </p>
-                            <form action="<?= URL_BASE . 'eliminar.php'?>" method="POST">
+                            <form action="<?= URL_BASE . 'eliminar.php?estado=edcat'?>" method="POST">
                                 <input type="hidden" name="id-proveedor" value="<?php echo htmlspecialchars($proveedor['id']); ?>">
                                 <button type="submit" class="boton">Eliminar</button>
                             </form>
