@@ -10,7 +10,12 @@ if ($_GET['stlabel'] === 'prdc') {
     $titulo = 'Tienda - Ventas';
 } elseif ($_GET['stlabel'] === 'prvd') {
     $titulo = 'Tienda - Proveedores';
-};
+}
+;
+
+$stmt = $pdo->prepare("SELECT * FROM proveedores");
+$stmt->execute();
+$proveedores = $stmt->fetchAll();
 
 ?>
 <!DOCTYPE html>
@@ -28,30 +33,7 @@ if ($_GET['stlabel'] === 'prdc') {
     <?php if ($_GET['stlabel'] === 'prdc'): ?>
         <?php include(ROOT_PATH . 'plantillas/listaProductos.php') ?>
     <?php elseif ($_GET['stlabel'] === 'prvd'): ?>
-        <section>
-            <?php 
-            $stmt = $pdo->prepare("SELECT * FROM proveedores");
-            $stmt->execute();
-            $proveedores = $stmt->fetchAll();
-            ?>
-            <div class="contenedor-proveedores">
-                <h2>Proveedores</h2>
-                <?php if (!empty($proveedores)): ?>
-                    <?php foreach ($proveedores as $proveedor): ?>
-                        <div class="tarjeta-proveedor">
-                            <h3><?= htmlspecialchars($proveedor['nombre']) ?></h3>
-                            <h4>Contactos:</h4>
-                            <p>Telefono: <?= htmlspecialchars($proveedor['telefono']) ?></p>
-                            <p>Telefono: <?= htmlspecialchars($proveedor['email']) ?></p>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
-            <div class="formulario-proveedor">
-                <h3>Agregar proveedor</h3>
-                <form action="<?= ROOT_PATH . 'funciones/proveedorAgregar.php' ?>" method="POST"></form>
-            </div>
-        </section>
+        <?php include(ROOT_PATH . 'plantillas/listarProveedores.php') ?>
     <?php else: ?>
         <?= 'Hola, nada por aquí aún' ?>
     <?php endif; ?>

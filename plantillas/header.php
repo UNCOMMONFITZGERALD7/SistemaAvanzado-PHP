@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once(dirname(__FILE__, 2) . '/globals.php');
 ?>
 <header class="header">
@@ -12,6 +12,10 @@ require_once(dirname(__FILE__, 2) . '/globals.php');
             <p>Categoria ingresada correctamente!</p>
         <?php elseif ($estado === 'cat_error'): ?>
             <?php echo htmlspecialchars($mensaje ?? 'Ocurrió un error inesperado.'); ?>
+        <?php elseif ($estado === 'errorprvd'): ?>
+            <?php echo htmlspecialchars($mensaje ?? 'Ocurrió un error inesperado.'); ?>
+        <?php elseif ($estado === 'ingresadoprvd'): ?>
+            <p>Proveedor ingresado correctaemnte!</p>
         <?php else: ?>
             <p><?= $infoconn ?></p>
         <?php endif; ?>

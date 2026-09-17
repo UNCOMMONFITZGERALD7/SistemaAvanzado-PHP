@@ -1,6 +1,6 @@
 <h2>Crear categoría</h2>
 <button type="button" id="btnCerrar">&times;</button>
-<form action="guardar_categoria.php" method="POST">
+<form action="<?= URL_BASE . 'guardar_categoria.php' ?>" method="POST">
     <label for="nombre-categoria">Nombre</label>
     <input required class="input" type="text" id="nombre-categoria" name="nombre-categoria" maxlength="60">
 
