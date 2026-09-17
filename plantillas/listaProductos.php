@@ -17,6 +17,7 @@
                 <th>Stock</th>
                 <th>Categoría</th>
                 <th>Fecha creación</th>
+                <th>Valor</th>
                 <th>Eliminar</th>
                 <th>Editar</th>
                 <th>Notas</th>
@@ -31,6 +32,7 @@
                         <td><?php echo htmlspecialchars($producto['stock']); ?></td>
                         <td><?php echo htmlspecialchars($producto['nombre_categoria']); ?></td>
                         <td><?php echo htmlspecialchars($producto['fecha_ingreso']); ?></td>
+                        <td><?php echo htmlspecialchars($producto['precio'] * $producto['stock']); ?></td>
 
                         <td>
                             <form action="<?= URL_BASE . 'eliminar.php' ?>" method="POST" style="display:inline;"
