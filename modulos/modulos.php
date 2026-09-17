@@ -31,6 +31,11 @@ if ($_GET['stlabel'] === 'prdc') {
         <?= 'Hola, nada por aquí aún' ?>
     <?php endif; ?>
     <button type="button" id="btnAbrirModal">Administrar categorias</button>
+    <?php $mensaje_usuario = $_GET['cat_status'] ?? ''; ?>
+    <?php if ($mensaje_usuario): ?>
+        <p><?= htmlspecialchars($mensaje_usuario) ?></p>
+    <?php endif; ?>
+
     <dialog id="modal">
         <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelCategorias.php') ?>
     </dialog>
