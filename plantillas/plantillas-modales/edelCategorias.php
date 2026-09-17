@@ -73,33 +73,3 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
         </form>
     <?php endforeach; ?>
 <?php endif; ?>
-
-<script>
-    document.querySelectorAll('.form-categoria').forEach((formulario) => {
-        const inputNombre = formulario.querySelector('.input-nombre');
-        const inputDesc = formulario.querySelector('.input-desc');
-        const contenedorBoton = formulario.querySelector('.contenedor-boton');
-
-        const evaluarCambios = () => {
-            const nombreCambio = inputNombre.value !== inputNombre.dataset.original;
-            const descCambio = inputDesc.value !== inputDesc.dataset.original;
-
-            if (nombreCambio || descCambio) {
-                contenedorBoton.innerHTML = '<button type="submit" name="accion" value="editar" class="btn-accion btn-editar">Editar</button>';
-            } else {
-                contenedorBoton.innerHTML = '<button type="submit" name="accion" value="eliminar" class="btn-accion btn-eliminar">Eliminar</button>';
-            }
-        };
-
-        inputNombre.addEventListener('input', evaluarCambios);
-        inputDesc.addEventListener('input', evaluarCambios);
-    });
-
-    const btnCerrarModal = document.getElementById('btnCerrar');
-    const modalCategorias = document.getElementById('modal');
-    if (btnCerrarModal && modalCategorias) {
-        btnCerrarModal.addEventListener('click', () => {
-            modalCategorias.close();
-        });
-    }
-</script>
