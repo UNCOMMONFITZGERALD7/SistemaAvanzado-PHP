@@ -2,11 +2,11 @@
 
 define('ROOT_PATH', __DIR__ . '/');
 define('URL_BASE', 'http://localhost/examen/');
+require_once ROOT_PATH . 'conexion.php';
 
 $estado = $_GET['estado'] ?? null;
 $mensaje = $_GET['mensaje'] ?? null;
-
-
+$swipdo = $pdo;
 function interpretarError(PDOException $e): string
 {
     $codigoError = $e->getCode();

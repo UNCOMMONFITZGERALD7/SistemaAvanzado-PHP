@@ -20,7 +20,6 @@
                 <th>Valor</th>
                 <th>Eliminar</th>
                 <th>Editar</th>
-                <th>Notas</th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +36,7 @@
                         <td>
                             <form action="<?= URL_BASE . 'eliminar.php' ?>" method="POST" style="display:inline;"
                                 onsubmit="return confirm('¿Eliminar este producto?')">
-                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($producto['id']); ?>">
+                                <input type="hidden" name="id-producto" value="<?php echo htmlspecialchars($producto['id']); ?>">
                                 <button id="eliminar-est" class="opcion-est" type="submit">
                                     <!-- SVG -->
                                 </button>
@@ -45,14 +44,7 @@
                         </td>
 
                         <td>
-                            <button type="button" class="opcion-est btn-editar"
-                                data-id="<?php echo htmlspecialchars($producto['id']); ?>">
-                                <!-- SVG -->
-                            </button>
-                        </td>
-
-                        <td>
-                            <button type="button" class="opcion-est btn-notas"
+                            <button id="editar-producto" type="button" class="opcion-est btn-editar"
                                 data-id="<?php echo htmlspecialchars($producto['id']); ?>">
                                 <!-- SVG -->
                             </button>

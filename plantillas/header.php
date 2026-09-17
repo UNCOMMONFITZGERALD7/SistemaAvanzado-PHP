@@ -16,6 +16,8 @@ require_once(dirname(__FILE__, 2) . '/globals.php');
             <?php echo htmlspecialchars($mensaje ?? 'Ocurrió un error inesperado.'); ?>
         <?php elseif ($estado === 'ingresadoprvd'): ?>
             <p>Proveedor ingresado correctaemnte!</p>
+        <?php elseif ($estado === 'eliminado'): ?>
+            <p>Elemento eliminado correctamente!</p>
         <?php else: ?>
             <p><?= $infoconn ?></p>
         <?php endif; ?>
