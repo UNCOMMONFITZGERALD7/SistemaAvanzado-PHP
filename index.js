@@ -1,5 +1,6 @@
 const modal = document.getElementById('modal');
 const btnAbrir = document.getElementById('btnAbrirModal');
+const btnAbrirModal = document.getElementById('btnAbrirModalDos');
 const btnAbrirEditar = document.getElementById('editar-producto');
 
 const botonCerrarHTML = '<button type="button" id="btnCerrar">Cerrar</button>';
@@ -48,6 +49,35 @@ if (btnAbrir && modal) {
             })
             .then(html => {
                 modal.innerHTML = botonCerrarHTML + html;
+                reprogramarBotonCerrar();
+                activarBotonesCambiantes(modal);
+                modal.showModal();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                modal.innerHTML = botonCerrarHTML + '<p>Error al cargar el modal</p>';
+                reprogramarBotonCerrar();
+                modal.showModal();
+            });
+    });
+}
+
+if (btnAbrirModal && modal) {
+    btnAbrirModal.addEventListener('click', (e) => {
+        e.preventDefault();
+        const archivoCatN = btnAbrirModal.getAttribute('da-ach');
+        const plantillaCatN = `/examen/plantillas/plantillas-modales/${archivoCatN}`;
+
+        fetch(plantillaCatN)
+            .then(Response => {
+                if (!Response.ok) {
+                    throw new Error('No se pudo cargar la plantilla');
+                }
+                return Response.text();
+            })
+            .then(html => {
+                modal.innerHTML = botonCerrarHTML + html;
+
                 reprogramarBotonCerrar();
                 activarBotonesCambiantes(modal);
                 modal.showModal();

@@ -19,10 +19,10 @@
                         <option value="<?= htmlspecialchars($categoria['id']) ?>"><?= htmlspecialchars($categoria['nombre']) ?></option>
                     <?php endforeach; ?>
                 </select>
-                <button class="" id="btnAbrirModal" type="button">Crear categoria</button>
+                <button class="" id="btnAbrirModalDos" type="button" da-ach="agregarCategorias.php">Crear categoria</button>
             <?php else: ?>
                 <p>No tienes categorias designadas.</p>
-                <button class="" id="asignar-categoria" type="button">Crea una!</button>
+                <button class="" id="btnAbrirModalDos" type="button" da-ach="agregarCategorias.php">Crea una!</button>
             <?php endif; ?>
             <button class="formato-boton" type="submit">Registrar Producto</button>
         </form>

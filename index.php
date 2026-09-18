@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php include('./plantillas/header.php') ?>
     <?php include('./plantillas/formAgregar.php') ?>
     <dialog id="modal">
-        <?php include('./plantillas/plantillas-modales/agregarCategorias.php') ?>
+        <?php include(ROOT_PATH . 'plantillas/plantillas-modales/agregarCategorias.php') ?>
     </dialog>
     <footer class="footer">
         <p>Tienda Mi Papelería — Sistema de gestión</p>
