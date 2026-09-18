@@ -73,7 +73,7 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="8"><em>Todavía no hay productos registrados.</em></td>
+                    <td colspan="8"><em>Todavía no hay productos registrados!</em></td>
                 </tr>
             <?php endif; ?>
         </tbody>
@@ -86,10 +86,16 @@
     $categorias = $stmt->fetchAll();
     ?>
     <table class="tabla-productos">
-        <thead>
-            <th>Categoría</th>
-            <th>Descripción</th>
-        </thead>
+        <?php if (!empty($categorias)): ?>
+            <thead>
+                <th>Categoría</th>
+                <th>Descripción</th>
+            </thead>
+        <?php else: ?>
+            <tr>
+                <td colspan="8"><em>Todavía no hay etiquetas registradas!</em></td>
+            </tr>
+        <?php endif; ?>
         <tbody>
             <?php if (!empty($categorias)): ?>
                 <?php foreach ($categorias as $categoria): ?>
@@ -101,7 +107,7 @@
             <?php endif; ?>
         </tbody>
     </table>
-    <?php if ($_GET['stlabel'] === 'prdc'): ?>
+    <?php if ($_GET['stlabel'] === 'prdc' && !empty($categorias)): ?>
         <button type="button" id="btnAbrirModal" class="btn-tercero boton-admcat" da-ach="edelCategorias.php">Administrar
             categorias</button>
     <?php endif; ?>
