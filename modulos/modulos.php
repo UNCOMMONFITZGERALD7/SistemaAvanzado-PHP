@@ -2,6 +2,12 @@
 require_once(dirname(__FILE__, 2) . '/globals.php');
 require_once ROOT_PATH . 'conexion.php';
 
+if ($_SERVER["REQUEST_METHOD"] === 'POST' && ($_GET['stlabel'] ?? '') === 'prdc') {
+    include(ROOT_PATH . 'plantillas/plantillas-modales/edelProductos.php');
+    include(ROOT_PATH . 'plantillas/plantillas-modales/edelCategorias.php');
+    exit;
+}
+
 $titulo = 'Documento';
 
 if ($_GET['stlabel'] === 'prdc') {
@@ -30,6 +36,7 @@ $proveedores = $stmt->fetchAll();
 
 <body>
     <?php include(ROOT_PATH . 'plantillas/header.php') ?>
+
     <?php if ($_GET['stlabel'] === 'prdc'): ?>
         <?php include(ROOT_PATH . 'plantillas/listaProductos.php') ?>
     <?php elseif ($_GET['stlabel'] === 'prvd'): ?>
@@ -39,17 +46,8 @@ $proveedores = $stmt->fetchAll();
     <?php else: ?>
         <?= 'Hola, nada por aquí aún' ?>
     <?php endif; ?>
-    <?php $mensaje_usuario = $_GET['cat_status'] ?? ''; ?>
-    <?php if ($mensaje_usuario): ?>
-        <p><?= htmlspecialchars($mensaje_usuario) ?></p>
-    <?php endif; ?>
 
-    <dialog id="modal">
-        <?php if (($_GET['stlabel'] ?? '') === 'prdc'): ?>
-            <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelProductos.php') ?>
-            <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelCategorias.php') ?>
-        <?php endif; ?>
-    </dialog>
+    <dialog id="modal"></dialog>
     <footer class="footer">
         <p>Tienda Mi Papelería — Sistema de gestión</p>
     </footer>

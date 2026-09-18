@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__, 2) . '/globals.php');
+require_once(dirname(__FILE__, 3) . '/globals.php');
 require_once ROOT_PATH . 'conexion.php';
 $stmt = $pdo->prepare("
     SELECT p.*,
@@ -65,8 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 <?php if (!empty($productos)): ?>
     <?php foreach ($productos as $producto): ?>
         <?php $tieneVentas = (int) $producto['ventas_count'] > 0; ?>
-        <form action="<?= URL_BASE ?>modulos/modulos.php?stlabel=prdc" method="POST"
-            class="form-producto" data-id="<?= $producto['id'] ?>" data-ventas="<?= (int) $producto['ventas_count'] ?>">
+        <form action="<?= URL_BASE ?>modulos/modulos.php?stlabel=prdc" method="POST" class="form-producto"
+            data-id="<?= $producto['id'] ?>" data-ventas="<?= (int) $producto['ventas_count'] ?>">
 
             <input type="hidden" name="id_producto" value="<?= $producto['id'] ?>">
 

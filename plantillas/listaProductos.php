@@ -11,6 +11,12 @@
     $productos = $stmt->fetchAll();
     ?>
     <h1>Productos</h1>
+    <?php $mensaje_usuario = $_GET['cat_status'] ?? ''; ?>
+    <?php if ($mensaje_usuario): ?>
+        <p>
+            <?= htmlspecialchars($mensaje_usuario) ?>
+        </p>
+    <?php endif; ?>
     <table class="tabla-productos">
         <?php if (!empty($productos)): ?>
             <thead>
