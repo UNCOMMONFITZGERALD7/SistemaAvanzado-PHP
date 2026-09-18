@@ -47,6 +47,7 @@ $proveedores = $stmt->fetchAll();
     <dialog id="modal">
         <?php if (($_GET['stlabel'] ?? '') === 'prdc'): ?>
             <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelProductos.php') ?>
+            <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelCategorias.php') ?>
         <?php endif; ?>
     </dialog>
     <footer class="footer">

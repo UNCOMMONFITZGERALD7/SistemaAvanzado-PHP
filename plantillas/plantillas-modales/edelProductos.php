@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__, 3) . '/globals.php');
+require_once(dirname(__FILE__, 2) . '/globals.php');
 require_once ROOT_PATH . 'conexion.php';
 $stmt = $pdo->prepare("
     SELECT p.*,

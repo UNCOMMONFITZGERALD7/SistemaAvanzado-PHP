@@ -1,6 +1,7 @@
 <?php
-require_once(dirname(__FILE__, 3) . '/globals.php');
+require_once(dirname(__FILE__, 2) . '/globals.php');
 require_once ROOT_PATH . 'conexion.php';
+ob_start();
 
 $stmt = $pdo->prepare("SELECT * FROM categoria");
 $stmt->execute();
@@ -39,11 +40,13 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
                 $mensaje_usuario = "Actualizado correctamente.";
             }
 
-            header("Location: " . URL_BASE . "modulos/modulos.php?stlabel=" . urlencode($_GET['stlabel'] ?? '') . "&cat_status=" . urlencode($mensaje_usuario));
+            header("Location: " . URL_BASE . "modulos/modulos.php?stlabel=prdc&cat_status=" . urlencode($mensaje_usuario));
             exit;
         } catch (PDOException $e) {
             error_log("Error en DB: " . $e->getMessage());
             $mensaje_usuario = "No se pudo procesar la acción.";
+            header("Location: " . URL_BASE . "modulos/modulos.php?stlabel=prdc&cat_status=" . urlencode($mensaje_usuario));
+            exit;
         }
     }
 }
@@ -53,7 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] === 'POST') {
 
 <?php if (!empty($categorias)): ?>
     <?php foreach ($categorias as $categoria): ?>
-        <form action="<?= URL_BASE ?>modulos/modulos.php?stlabel=<?= htmlspecialchars($_GET['stlabel'] ?? '') ?>" method="POST" class="form-categoria" data-id="<?= $categoria['id'] ?>">
+        <form action="<?= URL_BASE ?>modulos/modulos.php?stlabel=prdc" method="POST" class="form-categoria" data-id="<?= $categoria['id'] ?>">
+            data-id="<?= $categoria['id'] ?>">
 
             <input type="hidden" name="id_categoria" value="<?= $categoria['id'] ?>">
 
