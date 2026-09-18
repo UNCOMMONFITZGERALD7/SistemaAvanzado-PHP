@@ -16,3 +16,4 @@ try {
     error_log('Estado de la conexion: ' . $e->getMessage());
     $infoconn = 'Estado: Desconectado.';
 }
+
