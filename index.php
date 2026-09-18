@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'nombre' => $_POST['nombre-producto'],
             'precio' => $_POST['precio-producto'],
             'stock' => $_POST['stock-producto'],
-            'categoria' => (int)$_POST['categoria-producto'],
+            'categoria' => (int) $_POST['categoria-producto'],
         ]);
 
         header('Location: index.php?estado=ingresado');
@@ -53,6 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <dialog id="modal">
         <?php include('./plantillas/plantillas-modales/agregarCategorias.php') ?>
     </dialog>
+    <footer class="footer">
+        <p>Tienda Mi Papelería — Sistema de gestión</p>
+    </footer>
     <script src="index.js"></script>
 </body>
 

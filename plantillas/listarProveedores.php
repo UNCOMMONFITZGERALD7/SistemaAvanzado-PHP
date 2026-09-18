@@ -1,6 +1,6 @@
 <section>
     <div class="contenedor-proveedores">
-        <h2>Proveedores</h2>
+        <h1>Proveedores</h1>
         <?php if (!empty($proveedores)): ?>
             <ol class="listaO-tarjetas">
                 <?php foreach ($proveedores as $proveedor): ?>
@@ -44,7 +44,7 @@
             <input required placeholder="(Opcional)" class="input" type="email" id="email-proveedor"
                 name="email-proveedor" maxlength="40">
 
-            <button class="formato-boton" type="submit">Agregar proveedor</button>
+            <button class="formato-boton boton-proveedores" type="submit">Agregar proveedor</button>
         </form>
     </div>
 </section>

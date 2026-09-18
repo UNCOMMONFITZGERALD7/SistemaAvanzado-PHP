@@ -3,7 +3,7 @@ require_once(dirname(__FILE__, 2) . '/globals.php');
 ?>
 <header class="header">
     <h1>Tienda Mi Papelería</h1>
-    <div>
+    <div class="informacion-estados <?= in_array($estado, ['error', 'cat_error', 'errorprvd']) ? 'error' : 'exito' ?>">
         <?php if ($estado === 'ingresado'): ?>
             <p>Producto ingresado correctamente!</p>
         <?php elseif ($estado === 'error'): ?>

@@ -49,6 +49,9 @@ $proveedores = $stmt->fetchAll();
             <?php include(ROOT_PATH . 'plantillas/plantillas-modales/edelProductos.php') ?>
         <?php endif; ?>
     </dialog>
+    <footer class="footer">
+        <p>Tienda Mi Papelería — Sistema de gestión</p>
+    </footer>
     <script src="../index.js"></script>
 </body>
 
