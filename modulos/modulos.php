@@ -35,10 +35,7 @@ $proveedores = $stmt->fetchAll();
     <?php elseif ($_GET['stlabel'] === 'prvd'): ?>
         <?php include(ROOT_PATH . 'plantillas/listarProveedores.php') ?>
     <?php elseif ($_GET['stlabel'] === 'vnts'): ?>
-        <h4>Tienda - Ventas</h4>
-        <div class="contenedor-tienda">
-            
-        </div>
+        <?php include(ROOT_PATH . 'plantillas/listaVentas.php') ?>
     <?php else: ?>
         <?= 'Hola, nada por aquí aún' ?>
     <?php endif; ?>
