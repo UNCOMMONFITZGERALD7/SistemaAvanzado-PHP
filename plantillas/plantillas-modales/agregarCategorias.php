@@ -1,5 +1,5 @@
 <?php 
-require_once(dirname(__FILE__, 2) . '/globals.php');
+require_once(dirname(__FILE__, 3) . '/globals.php');
 ?>
 <div>
     <h2>Crear categoría</h2>
