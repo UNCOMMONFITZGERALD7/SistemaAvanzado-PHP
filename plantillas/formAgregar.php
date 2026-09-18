@@ -1,5 +1,5 @@
 <section>
-    <div>Agregar Producto</div>
+    <h2>Agregar Producto</h2>
     <div class="contenedor-formulario">
         <form class="formato-from" action="<?= URL_BASE . 'funciones/agregar.php' ?>" method="POST">
             <label for="nombre-producto">Nombre</label>
