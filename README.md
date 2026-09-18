@@ -2,11 +2,9 @@ SistemaAvanzado-PHP
 
 Repositorio: https://github.com/UNCOMMONFITZGERALD7/SistemaAvanzado-PHP
 
-Presentado por Jesus Daniel Pérez Berrocal
-
 
 AUTOR
-
+Presentado por Jesus Daniel Pérez Berrocal
 Cedula: 1137524660
 
 
