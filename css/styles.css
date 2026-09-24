@@ -111,7 +111,7 @@ a:hover {
     margin-left: 0;
 }
 
-.navegacion-listas {
+/* .navegacion-listas {
     display: flex;
     flex-direction: column;
     justify-content: end;
@@ -124,7 +124,7 @@ a:hover {
         margin: 0;
         margin-left: auto;
     }
-}
+} */
 
 button,
 .formato-boton,
