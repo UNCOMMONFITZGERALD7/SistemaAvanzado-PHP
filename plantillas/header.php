@@ -22,7 +22,7 @@ require_once(dirname(__FILE__, 2) . '/globals.php');
             <p><?= $infoconn ?></p>
         <?php endif; ?>
     </div>
-    <div>
+    <div class="navegacion-listas">
         <a class="proveedores" href="<?= URL_BASE . 'modulos/modulos.php?stlabel=prvd' ?>">Proveedores</a>
         <a class="productos" href="<?= URL_BASE . 'modulos/modulos.php?stlabel=prdc' ?>">Productos</a>
         <a class="ventas" href="<?= URL_BASE . 'modulos/modulos.php?stlabel=vnts' ?>">Ventas</a>

@@ -111,6 +111,21 @@ a:hover {
     margin-left: 0;
 }
 
+.navegacion-listas {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    gap: 5px;
+    padding: 0 1em;
+    width: 20%;
+
+    a {
+        margin: 0;
+        margin-left: auto;
+    }
+}
+
 button,
 .formato-boton,
 .boton,
